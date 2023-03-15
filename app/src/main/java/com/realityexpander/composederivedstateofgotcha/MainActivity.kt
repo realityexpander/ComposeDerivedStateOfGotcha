@@ -61,8 +61,8 @@ private fun SampleApp() {
 
     // This will not work because the derivedStateOf does not see the `counterValue` change bc its just a local variable
 //    val isDivisible by remember {
-//        derivedStateOf { counterValue % 10 == 0 }
-//    }
+//            derivedStateOf { counterValue % 10 == 0 }
+//        }
 
     // One way to fix it
 //    val isDivisible by remember(viewModel.currentCounterValue) {
@@ -70,7 +70,12 @@ private fun SampleApp() {
 //        }
 
     // Another way to fix it
-val isDivisible by remember { derivedStateOf { viewModel.currentCounterValue % 10 == 0 } }
+//    val isDivisible by remember { derivedStateOf { viewModel.currentCounterValue % 10 == 0 } }
+
+    // Yet another way to fix it
+    val isDivisible by remember(counterValue) {
+            derivedStateOf { counterValue % 10 == 0 }
+        }
 
     Column(
         modifier = Modifier.fillMaxSize(),
